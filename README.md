@@ -189,7 +189,7 @@ To install and run the application, use the Java and Maven tools as provisioned 
 
 ## License
 
-This project is licensed under the MIT License. See `calculator/LICENSE` for details.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) at the repository root for details.
 
 > [!IMPORTANT]
 > You are free to use, modify, and distribute this software under the terms of the MIT License.
