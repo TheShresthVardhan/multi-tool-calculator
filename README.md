@@ -1,52 +1,73 @@
-# Multi-Tool Calculator
+# 🧮 Multi-Tool Calculator
 
-The Multi-Tool Calculator is a web-based project combining a standard calculator, BMI calculator, and unit converter in a single responsive interface. It features a Spring Boot backend delivering calculation APIs and a modern HTML frontend for user interaction. This project demonstrates modular arithmetic processing, health utility, and unit conversion features through a unified Java-based web service.
-
----
-
-## Features
-
-- **Standard Arithmetic Calculator**
-  - Supports addition, subtraction, multiplication, and division.
-- **BMI Calculator**
-  - Calculates Body Mass Index (BMI) with dynamic unit support for both weight (kg/lb) and height (m/cm/in).
-- **Unit Converter**
-  - Converts between different supported units (details in source).
-- **Responsive Web UI**
-  - User-friendly HTML/CSS frontend with theme support and clear input forms.
-- **RESTful API**
-  - Exposes endpoints at `/api` for all core calculations.
-- **Error Handling**
-  - Handles invalid operations and division by zero with clear error messages.
+The **Multi-Tool Calculator** is a web-based project combining a standard calculator, BMI calculator, and unit converter in a single responsive interface. It features a Spring Boot backend 🚀 delivering calculation APIs and a modern HTML frontend 🎨 for user interaction.
 
 ---
 
-## Usage
+## 📁 Project Structure
+
+```
+calculator/
+├── src/main/java/com/example/calculator/
+│   ├── CalculatorApplication.java         🚀 Entry point
+│   ├── CalculatorController.java          🎮 REST controller
+│   ├── CalculateResponse.java             📤 Arithmetic DTO
+│   ├── BmiResponse.java                   📤 BMI DTO
+│   ├── ConvertResponse.java               📤 Conversion DTO
+│   └── service/
+│       ├── CalculatorService.java         ➗ Arithmetic logic
+│       ├── BmiService.java                ⚖️ BMI calculation
+│       └── ConversionService.java         🔄 Conversion + 💰 currency
+├── src/main/resources/
+│   ├── static/index.html                  🎨 Frontend UI
+│   └── application.properties             ⚙️ Configuration
+├── src/test/java/com/example/calculator/
+│   ├── CalculatorApplicationTests.java    ✅ Context test
+│   └── service/
+│       ├── CalculatorServiceTest.java     ✅ Arithmetic tests
+│       └── BmiServiceTest.java            ✅ BMI tests
+└── pom.xml                                📦 Maven build
+```
+
+---
+
+## ✨ Features
+
+- **➕ Standard Arithmetic Calculator** — add, subtract, multiply, divide
+- **⚖️ BMI Calculator** — calculates BMI with unit support (kg/lb, m/cm/in) and weight category classification
+- **🔄 Unit Converter** — temperature, length, weight, and currency (with live API + offline fallback)
+- **🎨 Responsive Web UI** — clean interface with dark mode 🌓 theme toggle
+- **🧩 RESTful API** — endpoints at `/api` for all core calculations
+- **🛡️ Error Handling** — clear messages for invalid operations, division by zero, and bad inputs
+- **📦 Service Layer** — business logic extracted into testable service classes
+- **💰 Configurable Currency Rates** — offline rates set in `application.properties`
+
+---
+
+## 🚀 Usage
 
 The application exposes its functionality through a web UI and REST API endpoints.
 
-- Access the web interface via `calculator/src/main/resources/static/index.html`.
-- The main backend endpoints are:
-  - `/api/calculate` for arithmetic operations.
-  - `/api/bmi` for BMI calculation.
-  - `/api/convert` for unit conversion.
+- Open `calculator/src/main/resources/static/index.html` in your browser 🌐
+- Backend endpoints:
+  - `/api/calculate` — arithmetic operations
+  - `/api/bmi` — BMI calculation
+  - `/api/convert` — unit conversion
 
 > [!TIP]
 > You can interact with the APIs directly for integration or automation, or use the built-in HTML frontend.
 
 ---
 
-## Installation
-
-To install and run the application, use the Java and Maven tools as provisioned in the repository.
+## 🛠️ Installation
 
 ```steps
-1. Install Java 26 | The project uses Java version 26 as specified in `calculator/pom.xml`.
-2. Install Maven | Make sure Maven is available to build the project.
-3. Clone Repository | Download the repository to your local machine.
-4. Build the Project | Use Maven to build: `./mvnw clean package` from the `calculator` directory.
-5. Run the Application | Start with `./mvnw spring-boot:run` or by running the generated JAR.
-6. Access the UI | Open your browser to the running server's address (default port 8080) to use the calculator.
+1. ☕ Install Java 21 — The project uses Java version 21 as specified in `calculator/pom.xml`.
+2. 📦 Install Maven — Make sure Maven is available to build the project.
+3. 📂 Clone Repository — Download the repository to your local machine.
+4. 🔨 Build the Project — `./mvnw clean package` from the `calculator` directory.
+5. ▶️ Run the Application — `./mvnw spring-boot:run` or run the generated JAR.
+6. 🌐 Access the UI — Open your browser to `http://localhost:8080`.
 ```
 
 > [!NOTE]
@@ -54,24 +75,25 @@ To install and run the application, use the Java and Maven tools as provisioned 
 
 ---
 
-## Requirements
+## ⚙️ Requirements
 
-- Java 26 or higher
-- Maven (or use included `mvnw`)
-- Web browser for the frontend interface
-
----
-
-## Configuration
-
-- Application properties can be set in `calculator/src/main/resources/application.properties`.
-- The default application name is set as `calculator`.
+- ☕ Java 21 or higher
+- 📦 Maven (or use included `mvnw`)
+- 🌐 Web browser for the frontend interface
 
 ---
 
-## API Endpoints
+## 🔧 Configuration
 
-### Calculate Endpoint (`GET /api/calculate`)
+- Edit `calculator/src/main/resources/application.properties` to customize:
+  - `server.port` — change the default port (default: `8080`)
+  - `conversion.currency.usd.*` — offline exchange rates for currency conversion (14 currencies supported)
+
+---
+
+## 📡 API Endpoints
+
+### ➕ Calculate (`GET /api/calculate`)
 
 ```api
 {
@@ -86,24 +108,14 @@ To install and run the application, use the Java and Maven tools as provisioned 
         {"key": "num2", "value": "Second operand", "required": true},
         {"key": "operation", "value": "Operation (add|subtract|multiply|divide)", "required": true}
     ],
-    "pathParams": [],
-    "bodyType": "none",
-    "requestBody": "",
-    "formData": [],
     "responses": {
-        "200": {
-            "description": "Calculation result",
-            "body": "{\n  \"result\": 8\n}"
-        },
-        "400": {
-            "description": "Error or invalid operation",
-            "body": "{\n  \"error\": \"Cannot divide by zero\"\n}"
-        }
+        "200": { "description": "Calculation result", "body": "{\n  \"result\": 8\n}" },
+        "400": { "description": "Error or invalid operation", "body": "{\n  \"error\": \"Cannot divide by zero\"\n}" }
     }
 }
 ```
 
-### BMI Calculation Endpoint (`GET /api/bmi`)
+### ⚖️ BMI Calculation (`GET /api/bmi`)
 
 ```api
 {
@@ -112,82 +124,42 @@ To install and run the application, use the Java and Maven tools as provisioned 
     "method": "GET",
     "baseUrl": "http://localhost:8080",
     "endpoint": "/api/bmi",
-    "headers": [],
     "queryParams": [
         {"key": "weight", "value": "Weight value", "required": true},
         {"key": "weightUnit", "value": "Weight unit (kg|lb)", "required": true},
         {"key": "height", "value": "Height value", "required": true},
         {"key": "heightUnit", "value": "Height unit (m|cm|in)", "required": true}
     ],
-    "pathParams": [],
-    "bodyType": "none",
-    "requestBody": "",
-    "formData": [],
     "responses": {
-        "200": {
-            "description": "BMI result",
-            "body": "{\n  \"bmi\": 22.3\n}"
-        },
-        "400": {
-            "description": "Error due to invalid input",
-            "body": "{\n  \"error\": \"Height must be greater than zero\"\n}"
-        }
+        "200": { "description": "BMI result", "body": "{\n  \"result\": 22.5,\n  \"category\": \"Normal weight\"\n}" },
+        "400": { "description": "Error due to invalid input", "body": "{\n  \"error\": \"Invalid height or weight\"\n}" }
     }
 }
 ```
 
-### Unit Conversion Endpoint (`GET /api/convert`)
+### 🔄 Unit Conversion (`GET /api/convert`)
 
 ```api
 {
     "title": "Unit Conversion",
-    "description": "Converts between supported units.",
+    "description": "Converts between supported units (temperature, length, weight, currency).",
     "method": "GET",
     "baseUrl": "http://localhost:8080",
     "endpoint": "/api/convert",
-    "headers": [],
     "queryParams": [
         {"key": "value", "value": "Value to convert", "required": true},
+        {"key": "category", "value": "Conversion category (temperature|length|weight|currency)", "required": true},
         {"key": "fromUnit", "value": "Source unit", "required": true},
         {"key": "toUnit", "value": "Target unit", "required": true}
     ],
-    "pathParams": [],
-    "bodyType": "none",
-    "requestBody": "",
-    "formData": [],
     "responses": {
-        "200": {
-            "description": "Converted value",
-            "body": "{\n  \"converted\": 2.54\n}"
-        },
-        "400": {
-            "description": "Error for unsupported conversion",
-            "body": "{\n  \"error\": \"Unsupported unit conversion\"\n}"
-        }
+        "200": { "description": "Converted value", "body": "{\n  \"result\": 2.54\n}" },
+        "400": { "description": "Error for unsupported conversion", "body": "{\n  \"error\": \"Conversion failed\"\n}" }
     }
 }
 ```
 
----
-
-## Project Structure
-
-- **Backend Source**
-  - `calculator/src/main/java/com/example/calculator/CalculatorApplication.java`: Application entry point.
-  - `calculator/src/main/java/com/example/calculator/CalculatorController.java`: REST API controller for calculator endpoints.
-- **Frontend**
-  - `calculator/src/main/resources/static/index.html`: HTML, CSS, and JS for the calculator interface.
-- **Configuration**
-  - `calculator/src/main/resources/application.properties`: Spring Boot configuration properties.
-- **Build & Dependency**
-  - `calculator/pom.xml`: Maven build and dependencies file.
-  - `calculator/mvnw`: Maven wrapper script.
-- **Testing**
-  - `calculator/src/test/java/com/example/calculator/CalculatorApplicationTests.java`: Spring Boot test class.
-
----
-
-## License
+## 📄 License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) at the repository root for details.
 
@@ -196,7 +168,7 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) at the re
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Fork the repository and submit a pull request.
 
@@ -205,12 +177,8 @@ Contributions are welcome! Fork the repository and submit a pull request.
 
 ---
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- Built with [Spring Boot](https://spring.io/projects/spring-boot).
-- Project structure and dependencies are managed via Maven.
-
----
-
-> [!NOTE]
-> For extended documentation, review the source files under `calculator/src/main/java/com/example/calculator/` and the frontend code in `calculator/src/main/resources/static/index.html`.
+- Built with [Spring Boot](https://spring.io/projects/spring-boot) 🚀
+- Project structure and dependencies are managed via Maven 📦
+- Exchange rates powered by [open.er-api.com](https://open.er-api.com) 🌐
